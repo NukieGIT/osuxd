@@ -1,34 +1,29 @@
+import Behaviour from "./Behaviour.js";
 import Vector from "./Vector2.js";
 import KeyCode from "./KeyCode.js";
 import UserInput from "./UserInput.js";
 import Object from "./Object.js";
 import Circle from "./Circle.js";
-import { Clamp, Lerp } from "./VectorMath.js";
+import { Clamp, Lerp } from "./Utils.js";
 
 class Engine {
+
+    static Instance = this;
+
     constructor() {
         this.canvas;
         this.ctx;
         this.objects = [];
-
+        this.behaviour = new Behaviour();
+        
         this.#CreateCanvas();
-        this.#EventListeners();
-        // requestAnimationFrame(this.#Update);
-        this.#Update();
+        this.#EventListeners();        
     }
     
     #EventListeners() {
         window.addEventListener("NewObject", e => {
             this.objects.push(e.detail);
-            // console.log(e.detail);
         })
-    }
-
-    #Update() {
-        for (let obj of this.objects) {
-            obj.Update();
-        }
-        requestAnimationFrame(() => this.#Update());
     }
 
     #CreateCanvas() {

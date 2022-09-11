@@ -1,5 +1,8 @@
-class Object {
+import Behaviour from "./Behaviour.js";
+
+class Object extends Behaviour{
     constructor(ctx, pos, color="purple") {
+        super();
         this.pos;
         this.ctx = ctx;
         this.setPos(pos);

@@ -6,7 +6,8 @@ class Circle extends Object{
         this.radius = radius;
     }
     
-    Update() {
+    Render() {
+        if (!this.ctx) return;
         this.ctx.beginPath();
         this.ctx.arc(this.pos.x, this.pos.y, this.radius, 0, 2*Math.PI);
         this.ctx.fillStyle = this.color;
@@ -15,6 +16,12 @@ class Circle extends Object{
         this.ctx.lineWidth = 5;
         this.ctx.stroke();
     }
+
+    Update() {
+        this.Render();
+        requestAnimationFrame(() => this.Update());
+    }
+
 }
 
 export default Circle;
