@@ -1,15 +1,16 @@
-import Engine from "./Engine.js";
-import Vector from "./Vector2.js";
-import KeyCode from "./KeyCode.js";
-import UserInput from "./UserInput.js";
-import Object from "./Object.js";
-import Circle from "./Circle.js";
-import { Clamp, Lerp } from "./VectorMath.js";
+import Engine from "./Engine/Engine.js";
+import Vector from "./Engine/Vector2.js";
+import KeyCode from "./Engine/KeyCode.js";
+import UserInput from "./Engine/UserInput.js";
+import Object from "./Engine/Object.js";
+import Circle from "./Engine/Circle.js";
+import { Clamp, Lerp } from "./Engine/VectorMath.js";
 
 
 const engine = new Engine();
-console.log(engine);
-engine.CreateCanvas();
+// engine.CreateCanvas();
+
+new Circle(engine.ctx, new Vector(engine.canvas.width / 2, engine.canvas.height / 2), 50);
 
 //#region Canvas Setup
 // const canvas = document.querySelector("canvas");

@@ -1,9 +1,11 @@
 class Object {
-    constructor(pos, color="purple") {
+    constructor(ctx, pos, color="purple") {
         this.pos;
+        this.ctx = ctx;
         this.setPos(pos);
         this.setColor(color);
-        OBJECTS.push(this);
+        const event = new CustomEvent("NewObject", {detail: this});
+        window.dispatchEvent(event);
     }
 
     setColor(newC) {
