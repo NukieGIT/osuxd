@@ -1,13 +1,14 @@
 import Behaviour from "./Behaviour.js";
 
 class Object extends Behaviour{
-    constructor(ctx, pos, color="purple") {
+    constructor(canvas, pos, color="purple") {
         super();
         this.pos;
-        this.ctx = ctx;
+        this.canvas = canvas;
+        this.ctx = this.canvas.ctx;
         this.setPos(pos);
         this.setColor(color);
-        const event = new CustomEvent("NewObject", {detail: this});
+        const event = new CustomEvent("OnNewObject", {detail: this});
         window.dispatchEvent(event);
     }
 

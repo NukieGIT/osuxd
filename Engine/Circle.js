@@ -1,8 +1,8 @@
 import Object from "./Object.js";
 
 class Circle extends Object{
-    constructor(ctx, pos, radius, color) {
-        super(ctx, pos, color);
+    constructor(canvas, pos, radius, color) {
+        super(canvas, pos, color);
         this.radius = radius;
     }
     
