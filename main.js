@@ -6,6 +6,7 @@ import Circle from "./Engine/Circle.js";
 import { Clamp, Lerp } from "./Engine/Utils.js";
 import Behaviour from "./Engine/Behaviour.js";
 import Text from "./Engine/Text.js";
+import Engine from "./Engine/Engine.js";
 
 const GLOBAL_CANVAS = new Canvas(document.body, {fillScreen: true});
 
@@ -14,11 +15,13 @@ class CircleTesting extends Behaviour {
         super();
         this.circle = new Circle(GLOBAL_CANVAS, new Vector(GLOBAL_CANVAS.canvas.width / 4, GLOBAL_CANVAS.canvas.height / 2), 100, "orange");
         this.fps = new Text(GLOBAL_CANVAS, "", Vector.zero(), 30, "white");
+        this.mousePos = new Text(GLOBAL_CANVAS, "", new Vector(0, 30), 30, "white");
         this.velocity = Vector.zero();
     }
     
     Update(dt) {
         this.fps.value = `${Math.round(1/dt)} FPS`;
+        this.mousePos.value = `${Engine.Instance.Input.mousePos.x}, ${Engine.Instance.Input.mousePos.y}`
         this.circle.pos = this.circle.pos.add(this.velocity.normalize().mult(1000).mult(dt));
     }
     

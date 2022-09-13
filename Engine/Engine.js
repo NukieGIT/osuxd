@@ -12,6 +12,7 @@ class Engine {
 
     constructor() {
         Engine.Instance = this;
+        this.Input = new UserInput();
         this.#EventListeners();        
         this.#StartUpdate();
     }
