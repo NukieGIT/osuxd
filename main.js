@@ -9,23 +9,6 @@ import Text from "./Engine/Text.js";
 
 const GLOBAL_CANVAS = new Canvas(document.body, {fillScreen: true});
 
-function getMousePos(canvas, evt) {
-    var rect = canvas.getBoundingClientRect();
-    return {
-      x: evt.clientX - rect.left,
-      y: evt.clientY - rect.top
-    };
-}
-let ee = {
-    clientX: 0,
-    clientY: 0
-};
-
-GLOBAL_CANVAS.canvas.addEventListener("mousemove", e => {
-    ee.clientX = e.clientX;
-    ee.clientY = e.clientY;
-})
-
 class CircleTesting extends Behaviour {
     constructor() {
         super();
@@ -34,11 +17,8 @@ class CircleTesting extends Behaviour {
         this.velocity = Vector.zero();
     }
     
-    
-    
     Update(dt) {
-        // console.log(getMousePos(GLOBAL_CANVAS.canvas, ee));
-        this.fps.value = Math.round(1/dt);
+        this.fps.value = `${Math.round(1/dt)} FPS`;
         this.circle.pos = this.circle.pos.add(this.velocity.normalize().mult(1000).mult(dt));
     }
     
