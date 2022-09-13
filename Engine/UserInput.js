@@ -4,26 +4,36 @@ import KeyCode from "./KeyCode.js";
 import Vector from "./Vector2.js";
 
 class UserInput extends Behaviour{
+
+    // static Instance = undefined;
+    static mousePos = Vector.zero();
+
     #tempMousePos
     constructor() { 
         super();
-        this.mouse = {};
         this.keys = {};
         
-        this.mousePos = Vector.zero();
-        this.#tempMousePos = {};
+        this.#tempMousePos = {
+            clientX: 0,
+            clientY: 0
+        };
         Canvas.Instance.canvas.addEventListener("mousemove", e => {
             this.#tempMousePos.clientX = e.clientX;
             this.#tempMousePos.clientY = e.clientY;
         })
+        this.#LoadKeys();
     }
 
     #SetMousePos() {
         const rect = Canvas.Instance.canvas.getBoundingClientRect();
-        this.mousePos = new Vector(this.#tempMousePos.clientX - rect.left, this.#tempMousePos.clientY - rect.top);
+        UserInput.mousePos = new Vector(this.#tempMousePos.clientX - rect.left, this.#tempMousePos.clientY - rect.top);
     }
 
-    Update() {
+    #LoadKeys() {
+        
+    }
+
+    FirstUpdate() {
         this.#SetMousePos();
     }
 

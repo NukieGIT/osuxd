@@ -21,11 +21,12 @@ class CircleTesting extends Behaviour {
     
     Update(dt) {
         this.fps.value = `${Math.round(1/dt)} FPS`;
-        this.mousePos.value = `${Engine.Instance.Input.mousePos.x}, ${Engine.Instance.Input.mousePos.y}`
+        this.mousePos.value = `x: ${UserInput.mousePos.x}, y: ${UserInput.mousePos.y}`
         this.circle.pos = this.circle.pos.add(this.velocity.normalize().mult(1000).mult(dt));
     }
     
 }
+
 let ae = new CircleTesting();
 window.addEventListener("keydown", (e) => {
     if (e.code == "KeyW") {
