@@ -19,7 +19,6 @@ class Circle extends Object{
 
     Update() {
         this.Render();
-        requestAnimationFrame(() => this.Update());
     }
 
 }

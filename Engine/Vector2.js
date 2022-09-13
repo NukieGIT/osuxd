@@ -64,7 +64,7 @@ class Vector {
         return new Vector(0, 0);
     }
     
-    visualize(startX, startY, n, color="green") {
+    visualize(ctx, startX, startY, n, color="green") {
         ctx.beginPath();
         ctx.moveTo(startX, startY);
         ctx.lineTo(startX + this.x * n, startY + this.y * n);

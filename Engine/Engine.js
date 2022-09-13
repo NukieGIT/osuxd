@@ -12,17 +12,18 @@ class Engine {
 
     constructor() {
         Engine.Instance = this;
-        this.canvases = []
-        this.objects = [];
-        this.behaviour = new Behaviour();
-        
         this.#EventListeners();        
+        this.#StartUpdate();
+    }
+
+    #StartUpdate() {
+        requestAnimationFrame(Behaviour.Update);
     }
     
     #EventListeners() {
-        window.addEventListener("OnNewObject", e => {
-            this.objects.push(e.detail);
-        })
+        // window.addEventListener("OnNewObject", e => {
+        //     this.objects.push(e.detail);
+        // })
     }
 
 }

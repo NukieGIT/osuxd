@@ -1,6 +1,9 @@
 import Behaviour from "./Behaviour.js";
 
 class Object extends Behaviour{
+
+    static Instances = [];
+
     constructor(canvas, pos, color="purple") {
         super();
         this.pos;
@@ -8,8 +11,9 @@ class Object extends Behaviour{
         this.ctx = this.canvas.ctx;
         this.setPos(pos);
         this.setColor(color);
-        const event = new CustomEvent("OnNewObject", {detail: this});
-        window.dispatchEvent(event);
+        Object.Instances.push(this);
+        // const event = new CustomEvent("OnNewObject", {detail: this});
+        // window.dispatchEvent(event);
     }
 
     setColor(newC) {

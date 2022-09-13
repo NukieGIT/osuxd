@@ -3,29 +3,31 @@ import Engine from "./Engine.js";
 class Canvas {
     #engine;
 
-        /**
-         * Creates a new Canvas managed by engine
-         * @param {Object} elem html element to which canvas is going to append to
-         * @param {Boolean} fillscreen whether canvas should fill the entire screen or not
-         * @param {Object} dimensions sets the dimensions of the canvas if fillscreen is not true
-         */
-        constructor(elem, {fillScreen = true, dimensions}) {
-        if (!Engine.Instance) {
-            this.#engine = new Engine();
-        }
+    static Instance = undefined;
 
+    /**
+     * Creates a new Canvas managed by engine
+     * @param {Object} elem html element to which canvas is going to append to
+     * @param {Boolean} fillscreen whether canvas should fill the entire screen or not
+     * @param {Object} dimensions sets the dimensions of the canvas if fillscreen is not true
+     */
+    constructor(elem, {fillScreen = true, dimensions}) {
+        Canvas.Instance = this;        
         this.canvas;
         this.ctx;
         this.elem = elem;
         this.fillScreen = fillScreen;
         this.dimensions = dimensions;
-        Engine.Instance.canvases.push(this);
-
+        
         this.#CreateCanvas();
+        if (!Engine.Instance) {
+            this.#engine = new Engine();
+        }
     }
 
     #CreateCanvas() {
         this.canvas = document.createElement("canvas");
+        this.canvas.style.display = "block";
         // this.canvas.tabIndex = 0;
 
         if (this.fillScreen) {

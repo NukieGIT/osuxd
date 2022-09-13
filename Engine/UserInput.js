@@ -6,7 +6,7 @@ class UserInput {
         this.mouse = {};
         this.keys = {};
 
-        this.mousePostiion = Vector.zero;
+        this.mousePostiion = Vector.zero();
 
     }
 
