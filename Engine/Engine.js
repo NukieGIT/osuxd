@@ -10,9 +10,10 @@ class Engine {
 
     static Instance = undefined;
 
+    #Input;
     constructor() {
         Engine.Instance = this;
-        this.Input = new UserInput();
+        this.#Input = new UserInput();
         this.#EventListeners();        
         this.#StartUpdate();
     }

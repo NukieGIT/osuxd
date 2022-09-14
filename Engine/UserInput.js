@@ -5,13 +5,14 @@ import Vector from "./Vector2.js";
 
 class UserInput extends Behaviour{
 
-    // static Instance = undefined;
+    static Instance = undefined;
     static mousePos = Vector.zero();
 
-    #tempMousePos
+    #keys;
+    #tempMousePos;
     constructor() { 
         super();
-        this.keys = {};
+        this.#keys = {};
         
         this.#tempMousePos = {
             clientX: 0,
@@ -21,7 +22,8 @@ class UserInput extends Behaviour{
             this.#tempMousePos.clientX = e.clientX;
             this.#tempMousePos.clientY = e.clientY;
         })
-        this.#LoadKeys();
+        this.#KeySetup();
+        UserInput.Instance = this;
     }
 
     #SetMousePos() {
@@ -29,16 +31,68 @@ class UserInput extends Behaviour{
         UserInput.mousePos = new Vector(this.#tempMousePos.clientX - rect.left, this.#tempMousePos.clientY - rect.top);
     }
 
-    #LoadKeys() {
-        
+    #KeySetup() {
+        window.addEventListener("keydown", e => {
+            if (typeof this.#keys[e.code] !== "object") {
+                this.#keys[e.code] = {};
+            }
+            
+            if (this.#keys[e.code].tempDown) return;
+            this.#keys[e.code].down = true;
+            this.#keys[e.code].tempDown = true;
+        })
+        window.addEventListener("keyup", e => {
+            if (typeof this.#keys[e.code] !== "object") {
+                this.#keys[e.code] = {};
+            }
+            this.#keys[e.code].up = true;
+            this.#keys[e.code].tempDown = false;
+        })
+    }
+    
+    #ResetKeys() {
+        for (const key in this.#keys) {
+            this.#keys[key].down = false;
+            this.#keys[key].up = false;
+        }
     }
 
     FirstUpdate() {
         this.#SetMousePos();
     }
 
-    GetKeyDown(keyCode) {
+    LateUpdate() {
+        this.#ResetKeys();
+    }
 
+    GetAllKeyPress() {
+        // const obj = {};
+        // for (const key in this.#keys) {
+        //     obj.key = this.GetKeyPress(key);
+        // }
+        // return obj;
+    }
+
+    GetKeyDown(keyCode) {
+        return this.#keys[keyCode]?.down;
+    }
+
+    GetKeyUp(keyCode) {
+        return this.#keys[keyCode]?.up;
+    }
+
+    GetKeyPress(keyCode) {
+        if (this.GetKeyDown(keyCode)) {
+            this.#keys[keyCode].downPreviousFrame = true;
+        }
+        if (this.#keys[keyCode]?.downPreviousFrame) {
+            if (!this.GetKeyUp(keyCode)) {
+                return true;
+            } else {
+                this.#keys[keyCode].downPreviousFrame = false;
+            }
+        }
+        return false;
     }
 }
 
