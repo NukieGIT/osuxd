@@ -9,10 +9,12 @@ class UserInput extends Behaviour{
     static mousePos = Vector.zero();
 
     #keys;
+    #allKeyPress;
     #tempMousePos;
     constructor() { 
         super();
         this.#keys = {};
+        this.#allKeyPress = new Set();
         
         this.#tempMousePos = {
             clientX: 0,
@@ -66,11 +68,15 @@ class UserInput extends Behaviour{
     }
 
     GetAllKeyPress() {
-        // const obj = {};
-        // for (const key in this.#keys) {
-        //     obj.key = this.GetKeyPress(key);
-        // }
-        // return obj;
+        for (const key in this.#keys) {
+            if (this.GetKeyPress(key)) {
+                this.#allKeyPress.add(key)
+            }
+            if (this.GetKeyUp(key)) {
+                this.#allKeyPress.delete(key);
+            }
+        }
+        return [...this.#allKeyPress.values()];
     }
 
     GetKeyDown(keyCode) {

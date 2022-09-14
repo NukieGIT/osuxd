@@ -23,7 +23,7 @@ class CircleTesting extends Behaviour {
     Update(dt) {
         this.fps.value = `${Math.round(1/dt)} FPS`;
         this.mousePos.value = `x: ${UserInput.mousePos.x}, y: ${UserInput.mousePos.y}`
-        this.inputText.value = JSON.stringify(UserInput.Instance.GetAllKeyPress());
+        this.inputText.value = `Keys Pressed: ${JSON.stringify(UserInput.Instance.GetAllKeyPress())}`;
         this.circle.pos = this.circle.pos.add(this.velocity.normalize().mult(1000).mult(dt));
     }
     
