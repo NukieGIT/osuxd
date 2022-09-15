@@ -1,20 +1,18 @@
 import Behaviour from "./Behaviour.js";
 import Canvas from "./Canvas.js";
-import KeyCode from "./KeyCode.js";
 import Vector from "./Vector2.js";
 
 class UserInput extends Behaviour{
 
-    static Instance = undefined;
     static mousePos = Vector.zero();
+    static Instance = undefined;
 
-    #keys;
-    #allKeyPress;
+    static #keys = {};
+    static #allKeyPress = new Set();
+
     #tempMousePos;
     constructor() { 
         super();
-        this.#keys = {};
-        this.#allKeyPress = new Set();
         
         this.#tempMousePos = {
             clientX: 0,
@@ -35,27 +33,27 @@ class UserInput extends Behaviour{
 
     #KeySetup() {
         window.addEventListener("keydown", e => {
-            if (typeof this.#keys[e.code] !== "object") {
-                this.#keys[e.code] = {};
+            if (typeof UserInput.#keys[e.code] !== "object") {
+                UserInput.#keys[e.code] = {};
             }
             
-            if (this.#keys[e.code].tempDown) return;
-            this.#keys[e.code].down = true;
-            this.#keys[e.code].tempDown = true;
+            if (UserInput.#keys[e.code].tempDown) return;
+            UserInput.#keys[e.code].down = true;
+            UserInput.#keys[e.code].tempDown = true;
         })
         window.addEventListener("keyup", e => {
-            if (typeof this.#keys[e.code] !== "object") {
-                this.#keys[e.code] = {};
+            if (typeof UserInput.#keys[e.code] !== "object") {
+                UserInput.#keys[e.code] = {};
             }
-            this.#keys[e.code].up = true;
-            this.#keys[e.code].tempDown = false;
+            UserInput.#keys[e.code].up = true;
+            UserInput.#keys[e.code].tempDown = false;
         })
     }
     
     #ResetKeys() {
-        for (const key in this.#keys) {
-            this.#keys[key].down = false;
-            this.#keys[key].up = false;
+        for (const key in UserInput.#keys) {
+            UserInput.#keys[key].down = false;
+            UserInput.#keys[key].up = false;
         }
     }
 
@@ -67,35 +65,35 @@ class UserInput extends Behaviour{
         this.#ResetKeys();
     }
 
-    GetAllKeyPress() {
-        for (const key in this.#keys) {
+    static GetAllKeyPress() {
+        for (const key in UserInput.#keys) {
             if (this.GetKeyPress(key)) {
-                this.#allKeyPress.add(key)
+                UserInput.#allKeyPress.add(key)
             }
             if (this.GetKeyUp(key)) {
-                this.#allKeyPress.delete(key);
+                UserInput.#allKeyPress.delete(key);
             }
         }
-        return [...this.#allKeyPress.values()];
+        return [...UserInput.#allKeyPress.values()];
     }
 
-    GetKeyDown(keyCode) {
-        return this.#keys[keyCode]?.down;
+    static GetKeyDown(keyCode) {
+        return UserInput.#keys[keyCode]?.down;
     }
 
-    GetKeyUp(keyCode) {
-        return this.#keys[keyCode]?.up;
+    static GetKeyUp(keyCode) {
+        return UserInput.#keys[keyCode]?.up;
     }
 
-    GetKeyPress(keyCode) {
+    static GetKeyPress(keyCode) {
         if (this.GetKeyDown(keyCode)) {
-            this.#keys[keyCode].downPreviousFrame = true;
+            UserInput.#keys[keyCode].downPreviousFrame = true;
         }
-        if (this.#keys[keyCode]?.downPreviousFrame) {
+        if (UserInput.#keys[keyCode]?.downPreviousFrame) {
             if (!this.GetKeyUp(keyCode)) {
                 return true;
             } else {
-                this.#keys[keyCode].downPreviousFrame = false;
+                UserInput.#keys[keyCode].downPreviousFrame = false;
             }
         }
         return false;
