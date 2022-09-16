@@ -13,7 +13,12 @@ class Canvas {
      * @param {Object} dimensions sets the dimensions of the canvas if fillscreen is not true
      */
     constructor(elem, {fillScreen = true, dimensions = new Vector(200, 100)}) {
-        Canvas.Instance = this;        
+        if (Canvas.Instance !== undefined) {
+            Canvas.Instance.#DeleteCanvas();
+            Canvas.Instance = this;
+        } else {
+            Canvas.Instance = this;
+        }
         this.canvas;
         this.ctx;
         this.elem = elem;
@@ -50,6 +55,12 @@ class Canvas {
         this.elem.append(this.canvas);
         this.canvas.focus();
     }
+
+    #DeleteCanvas() {
+        console.warn("Canvas Recreated\n", (new Error).stack);
+        this.canvas.remove();
+    }
+
 }
 
 export default Canvas;
