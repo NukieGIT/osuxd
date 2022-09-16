@@ -12,7 +12,7 @@ class UIObject {
     
     set position(v) {
         if (!(v instanceof Vector)) {
-            console.warn("This is not a Vector2\n", (new Error).stack);
+            console.error("This is not a Vector2");
             return;
         }
         this._pos = v;

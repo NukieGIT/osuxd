@@ -55,7 +55,7 @@ class Text extends UIObject{
 
     set fontsize(size) {
         if (!Utils.isDouble(size) && !Number.isInteger(size)) {
-            console.warn("This is not a number\n", (new Error).stack);
+            console.error("This is not a number");
             return;
         }
         this.#fontsize = size;
