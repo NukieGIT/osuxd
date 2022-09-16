@@ -33,6 +33,7 @@ class UserInput extends Behaviour{
 
     #KeySetup() {
         window.addEventListener("keydown", e => {
+            e.preventDefault();
             if (typeof UserInput.#keys[e.code] !== "object") {
                 UserInput.#keys[e.code] = {};
             }
@@ -42,6 +43,7 @@ class UserInput extends Behaviour{
             UserInput.#keys[e.code].tempDown = true;
         })
         window.addEventListener("keyup", e => {
+            e.preventDefault();
             if (typeof UserInput.#keys[e.code] !== "object") {
                 UserInput.#keys[e.code] = {};
             }

@@ -34,7 +34,7 @@ class Canvas {
     #CreateCanvas() {
         this.canvas = document.createElement("canvas");
         this.canvas.style.display = "block";
-        // this.canvas.tabIndex = 0;
+        this.canvas.tabIndex = 0;
 
         if (this.fillScreen) {
             let WIDTH = window.innerWidth;
