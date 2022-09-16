@@ -1,4 +1,5 @@
 import Engine from "./Engine.js";
+import Vector from "./Vector2.js";
 
 class Canvas {
     #engine;
@@ -11,7 +12,7 @@ class Canvas {
      * @param {Boolean} fillscreen whether canvas should fill the entire screen or not
      * @param {Object} dimensions sets the dimensions of the canvas if fillscreen is not true
      */
-    constructor(elem, {fillScreen = true, dimensions}) {
+    constructor(elem, {fillScreen = true, dimensions = new Vector(200, 100)}) {
         Canvas.Instance = this;        
         this.canvas;
         this.ctx;

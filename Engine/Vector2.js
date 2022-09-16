@@ -1,5 +1,8 @@
 class Vector {
     constructor(x, y) {
+        if (x === undefined || y === undefined) {
+            console.error("Either x or y is undefined");
+        }
         this.x = x;
         this.y = y;
     }

@@ -3,7 +3,7 @@ import Vector from "./Vector2.js";
 import UserInput from "./UserInput.js";
 import Object from "./Object.js";
 import Circle from "./Circle.js";
-import { Clamp, Lerp } from "./Utils.js";
+import Utils from "./Utils.js";
 
 class Engine {
 
