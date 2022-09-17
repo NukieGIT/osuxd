@@ -3,7 +3,6 @@ import UIObject from "./UIObject.js";
 
 class Text extends UIObject{
 
-    #pos
     #value
     #font
     #fontsize

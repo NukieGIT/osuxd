@@ -22,7 +22,7 @@ class CircleTesting extends Behaviour {
         // Text testing
         // ===========
         this.testingText = new Text(new Vector(0, 90), "hello world", "comfortaa", 50, "lightblue", {textAling: "left", textBaseline: "top"});
-        this.UI.addElement(this.testingText)
+        this.UI.addElement(this.testingText);
         this.testingText.fontsize = 100;
         this.testingText.position = new Vector(100, 100);
 
