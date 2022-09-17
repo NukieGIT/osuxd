@@ -18,10 +18,14 @@ class CircleTesting extends Behaviour {
         this.mousePos = new Textold(GLOBAL_CANVAS, "", new Vector(0, 30), 30, "white");
         this.inputText = new Textold(GLOBAL_CANVAS, "", new Vector(0, 60), 30, "white");
         this.UI = new UI(GLOBAL_CANVAS);
+        // ===========
+        // Text testing
+        // ===========
         this.testingText = new Text(new Vector(0, 90), "hello world", "comfortaa", 50, "lightblue", {textAling: "left", textBaseline: "top"});
         this.UI.addElement(this.testingText)
         this.testingText.fontsize = 100;
         this.testingText.position = new Vector(100, 100);
+
         this.velocity = Vector.zero();
     }
     

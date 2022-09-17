@@ -2,9 +2,12 @@ import Engine from "./Engine.js";
 import Vector from "./Vector2.js";
 
 class Canvas {
-    #engine;
-
+    
     static Instance = undefined;
+
+    #engine;
+    #originalWidth;
+    #originalHeight;
 
     /**
      * Creates a new Canvas managed by engine
@@ -14,8 +17,9 @@ class Canvas {
      */
     constructor(elem, {fillScreen = true, dimensions = new Vector(200, 100)}) {
         if (Canvas.Instance !== undefined) {
-            Canvas.Instance.#DeleteCanvas();
+            Canvas.Instance.DeleteCanvas();
             Canvas.Instance = this;
+            console.warn("Canvas Instance Recreated!\n", (new Error).stack);
         } else {
             Canvas.Instance = this;
         }
@@ -26,9 +30,7 @@ class Canvas {
         this.dimensions = dimensions;
         
         this.#CreateCanvas();
-        if (!Engine.Instance) {
-            this.#engine = new Engine();
-        }
+        this.#engine = new Engine();
     }
 
     #CreateCanvas() {
@@ -37,17 +39,25 @@ class Canvas {
         this.canvas.tabIndex = 0;
 
         if (this.fillScreen) {
-            let WIDTH = window.innerWidth;
-            let HEIGHT = window.innerHeight;
-    
-            this.canvas.width = WIDTH;
-            this.canvas.height = HEIGHT;
-        } else if (this.dimensions !== undefined) {
-            this.canvas.width = this.dimensions.x;
-            this.canvas.height = this.dimensions.y;
+            
+            window.addEventListener("resize", () => this.#HandleResize());
+            this.#originalWidth = window.innerWidth;
+            this.#originalHeight = window.innerHeight;
+            
+            this.canvas.width = this.#originalWidth;
+            this.canvas.height = this.#originalHeight;
+            
         } else {
-            console.warn("canvas dimensions and fillscreen are undefined\n", (new Error).stack);
+
+            this.#originalWidth = this.dimensions.x;
+            this.#originalHeight = this.dimensions.y;
+
+            this.canvas.width = this.#originalWidth;
+            this.canvas.height = this.#originalHeight;
         }
+        // else {
+        //     console.warn("canvas dimensions and fillscreen are undefined\n", (new Error).stack);
+        // }
 
 
         this.ctx = this.canvas.getContext("2d");
@@ -56,8 +66,37 @@ class Canvas {
         this.canvas.focus();
     }
 
-    #DeleteCanvas() {
-        console.warn("Canvas Recreated\n", (new Error).stack);
+    #HandleResize() {
+
+        const WIDTH = window.innerWidth;
+        const HEIGHT = window.innerHeight;
+
+        this.canvas.width = WIDTH;
+        this.canvas.height = HEIGHT;
+
+        // let WIDTH = window.innerWidth;
+        // let HEIGHT = window.innerHeight;
+
+        // const canvasAspectRatio = this.#originalWidth / this.#originalHeight;
+        // const newAspectRatio = WIDTH / HEIGHT;
+        // let cWidth;
+        // let cHeight;
+        // let widthFirst = canvasAspectRatio > newAspectRatio;
+        
+        // if (!widthFirst) {
+        //     cWidth = this.#originalWidth;
+        //     cHeight = cWidth / canvasAspectRatio;
+        // } else {
+        //     cHeight = this.#originalHeight;
+        //     cWidth = cHeight * canvasAspectRatio;
+        // }
+        // // console.log(cWidth, cHeight, this.#originalWidth, this.#originalHeight);
+        // this.canvas.width = cWidth;
+        // this.canvas.height = cHeight;
+    }
+
+    DeleteCanvas() {
+        console.warn("Canvas Deleted!\n", (new Error).stack);
         this.canvas.remove();
     }
 

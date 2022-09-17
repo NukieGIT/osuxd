@@ -11,7 +11,12 @@ class Engine {
 
     #Input;
     constructor() {
-        Engine.Instance = this;
+        if (Engine.Instance !== undefined) {
+            Engine.Instance = this;
+            console.warn("Engine Instance Recreated!\n", (new Error).stack);
+        } else {
+            Engine.Instance = this;
+        }
         this.#Input = new UserInput();
         this.#EventListeners();        
         this.#StartUpdate();
